@@ -78,6 +78,9 @@ scripts/cuda_run.sh python -u scripts/train_jax.py --name route --start-group al
 .venv/bin/python -m goi_jax.play runs/route/checkpoints/latest.pkl --backend real --steps 6000 --video climb.mp4
 ```
 
+The winning network, its checkpoint and two full videos are on
+[Hugging Face](https://huggingface.co/zimmerk4/getting-over-it-rl-jax).
+
 `scripts/train_jax.py --help` lists the options (start groups, section specialists with `--bank-skip`, warm starts
 with `--resume`). `goi_jax.play --ending 90 --watch --video ...` also records the game's own ending after a win.
 
