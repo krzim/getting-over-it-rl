@@ -58,9 +58,9 @@ about 45,000 to 50,000 steps per second at 16,384 to 32,768 games on an RTX 3090
 of the game. Training happens entirely in the simulator, and the trained network plays the real game unchanged,
 because the plugin's observation is bit-identical to the simulator's.
 
-**Result:** one network, trained only in the simulator, won the real game from the bottom in 5 of 11 continuous
-climbs (no save/load, no other networks). Of the other six, four were still climbing in space at 810-860 m when the
-test's 100-second limit ended them (the win is at 864 m), and two fell and stalled.
+**Result:** one network, trained only in the simulator, wins the real game from the bottom in **17 of 20 continuous
+climbs (85%)**, with no save/load and no other networks. The median win takes 1 min 55 s of play (the fastest 87 s).
+The three other climbs were still going after 5 minutes: two below 160 m, and one that fell from 413 m.
 
 How it was trained:
 - PPO, written PureJaxRL-style so rollouts, updates, episode bookkeeping and the start curriculum all run on the GPU.
