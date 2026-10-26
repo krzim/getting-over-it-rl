@@ -13,6 +13,11 @@ train = [
     "tensorboard>=2.21.0",
     "torch>=2.14.0",
 ]
+# The JAX simulator and its trainer (goi_jax/, scripts/train_jax.py). For NVIDIA GPUs install jax[cuda13]==0.12.0.
+jax = [
+    "jax==0.12.0",
+    "imageio[ffmpeg]>=2.37.4",
+]
 
 # PyPI's Windows torch wheels are CPU-only. The CUDA 13.0 build trains the big policy (--net big --device cuda) ~10x
 # faster than the CPU, and still runs everything on the CPU without a GPU.
