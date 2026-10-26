@@ -129,6 +129,27 @@ def test_checkpoint_round_trip(trained):
     assert np.array_equal(np.asarray(a1), np.asarray(a2))
 
 
+@pytest.mark.parametrize("sections", [0, 5])
+def test_policy_npz_round_trip(tmp_path, sections):
+    """save_npz -> load: the same params, observation normaliser and config, read with allow_pickle=False."""
+    import jax
+    from goi_jax.training import checkpoint as C
+    from goi_jax.training import nets as N
+    from goi_jax.training import normalize as Nz
+    from goi_jax.training.config import TrainConfig
+    params = C.to_numpy(N.init_params(jax.random.PRNGKey(0), 105, sections=sections))
+    rms = Nz.RMS(np.arange(105, dtype=np.float32), np.full(105, 2.0, np.float32), np.float32(7.0))
+    ck = dict(config=TrainConfig(name="npz").to_dict(), params=params, obs_rms=rms)
+    C.save_npz(tmp_path / "policy.npz", ck)
+    back = C.load(tmp_path / "policy.npz")
+    assert jax.tree.structure(back["params"]) == jax.tree.structure(params)
+    for a, b in zip(jax.tree.leaves(back["params"]), jax.tree.leaves(params)):
+        assert np.array_equal(a, b)
+    for a, b in zip(back["obs_rms"], rms):
+        assert np.array_equal(a, b)
+    assert back["config"] == ck["config"] and back["opt"] is None
+
+
 @needs_data
 def test_play_dry_run_sim(trained, tmp_path):
     from goi_jax import play

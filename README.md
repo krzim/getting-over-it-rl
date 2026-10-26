@@ -78,8 +78,10 @@ scripts/cuda_run.sh python -u scripts/train_jax.py --name route --start-group al
 .venv/bin/python -m goi_jax.play runs/route/checkpoints/latest.pkl --backend real --steps 6000 --video climb.mp4
 ```
 
-The winning network, its checkpoint and two full videos are on
-[Hugging Face](https://huggingface.co/zimmerk4/getting-over-it-rl-jax).
+The winning network is on [Hugging Face](https://huggingface.co/zimmerk4/getting-over-it-rl-jax) as `policy.npz`
+(plain arrays, no pickle), with the command and logs of the 20 climbs. Play it with
+`.venv/bin/python -m goi_jax.play policy.npz --backend real --no-ends --steps 9000`; to export a checkpoint the same
+way, run `.venv/bin/python -m goi_jax.training.checkpoint CHECKPOINT.pkl policy.npz`.
 
 `scripts/train_jax.py --help` lists the options (start groups, section specialists with `--bank-skip`, warm starts
 with `--resume`). `goi_jax.play --ending 90 --watch --video ...` also records the game's own ending after a win.
